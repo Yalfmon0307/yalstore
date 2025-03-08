@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { getAllStore, login, register } from "../controllers/controller.js";
 
 const router = Router();
 
@@ -6,11 +7,11 @@ router.get("/", (req, res) => {
     res.send("Hello World!");
 });
 
-router.post("/login", (req, res) => {
+router.post("/login", login, (req, res) => {
     res.send("Login");
 });
 
-router.post("/register", (req, res) => {
+router.post("/register", register, (req, res) => {
     res.send("Register");
 });
 
@@ -22,7 +23,7 @@ router.post("/createProduct", (req, res) => {
     res.send("Create Product");
 });
 
-router.get("/getAllStore", (req, res) => {
+router.get("/getAllStore", getAllStore, (req, res) => {
     res.send("Get All Store");
 });
 
