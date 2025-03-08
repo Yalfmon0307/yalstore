@@ -10,7 +10,7 @@
     - editProduct
 
 3. crea una base de datos y las tablas necesarias.☑️
-4. vincula la base de datos a la app
+4. vincula la base de datos a la app ☑️
 5. crea los controller para cada ruta:
      - login
     - register
