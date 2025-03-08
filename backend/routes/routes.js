@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getAllStore, login, register, createStore } from "../controllers/controller.js";
+import { getAllStore, login, register, createStore, createProduct } from "../controllers/controller.js";
 
 const router = Router();
 
@@ -19,7 +19,7 @@ router.post("/createStore", createStore, (req, res) => {
     res.send("Create Store");
 });
 
-router.post("/createProduct", (req, res) => {
+router.post("/createProduct", createProduct, (req, res) => {
     res.send("Create Product");
 });
 

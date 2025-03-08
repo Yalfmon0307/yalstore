@@ -21,8 +21,19 @@ export const login = async (req, res) => {
             return res.status(401).json({ error: "Invalid username or password" });
         }
 
+        const store = await pool.query("SELECT * FROM store WHERE ownerId = $1", [result.rows[0].id]);
+
+        const payload = {
+            user: {
+                id: result.rows[0].id,
+                username: result.rows[0].username,
+                email: result.rows[0].email,
+                store: store.rows[0].id
+            },
+        };
+
         const token = jwt.sign(
-            { user: result.rows[0]},
+            { payload},
             process.env.JWT_SECRET,
             { expiresIn: "1h" }
         )
@@ -61,7 +72,7 @@ export const createStore = async (req, res) => {
         }
 
         const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
-        const userId = decodedToken.user.id;
+        const ownerId = decodedToken.payload.user.id;
 
         const { storeName } = req.body;
 
@@ -71,10 +82,11 @@ export const createStore = async (req, res) => {
 
         const result = await pool.query(
             "INSERT INTO store (storeName, ownerId) VALUES ($1, $2) RETURNING *",
-            [storeName, userId]
+            [storeName, ownerId]
         );
 
         res.status(201).json(result.rows[0]);
+        
 } catch (error) {
     console.log(error);
 }
@@ -88,3 +100,34 @@ export const getAllStore = async (req, res) => {
         console.log(error);
     }
 };
+
+export const createProduct = async (req, res) => {
+    try {
+        const token = req.cookies.token;
+        if (!token) {
+            return res.status(401).json({ error: "Unauthorized" });
+        }
+
+        const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+        const ownerId = decodedToken.payload.user.id;
+        const storeId = decodedToken.payload.user.store;
+
+        const { productName, price } = req.body;
+
+        if (!productName || !price) {
+            return res.status(400).json({ error: "Missing product name or price" });
+        }
+
+        const image = req.file ? Buffer.from(req.file.buffer) : null;
+        
+        const result = await pool.query(
+            "INSERT INTO products (productName, price, imagen, ownerId, storeId) VALUES ($1, $2, $3, $4, $5) RETURNING *",
+            [productName, price, image, ownerId, storeId]
+        );
+
+        res.status(201).json(result.rows[0]);
+    } catch (error) {
+        console.log(error);
+    }
+};
+
