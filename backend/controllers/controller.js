@@ -22,12 +22,12 @@ export const login = async (req, res) => {
         }
 
         const token = jwt.sign(
-            { userId: result.rows[0]},
+            { user: result.rows[0]},
             process.env.JWT_SECRET,
             { expiresIn: "1h" }
         )
 
-        res.cookie("token", token, { httpOnly: true , secure: true, sameSite: "none" }).json({ message: "Login successful" });
+        res.cookie("token", token, { httpOnly: true , secure: false, sameSite: "none" }).json({ message: "Login successful" });
 
     } catch (error) {
         console.log(error);
@@ -53,6 +53,33 @@ export const register = async (req, res) => {
     }
 }
 
+export const createStore = async (req, res) => {
+    try {
+        const token = req.cookies.token;
+        if (!token) {
+            return res.status(401).json({ error: "Unauthorized" });
+        }
+
+        const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+        const userId = decodedToken.user.id;
+
+        const { storeName } = req.body;
+
+        if (!storeName) {
+            return res.status(400).json({ error: "Missing store name" });
+        }
+
+        const result = await pool.query(
+            "INSERT INTO store (storeName, ownerId) VALUES ($1, $2) RETURNING *",
+            [storeName, userId]
+        );
+
+        res.status(201).json(result.rows[0]);
+} catch (error) {
+    console.log(error);
+}
+
+}
 export const getAllStore = async (req, res) => {
     try {
         const result = await pool.query("SELECT * FROM store");
