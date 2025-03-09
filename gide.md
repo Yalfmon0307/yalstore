@@ -24,8 +24,8 @@
 6. inicia el front con vite☑️
 7. crea los router de react con las rutas necesarias
 y crea los componentes para cada ruta:
-    - login
-    - register
+    - login☑️
+    - register ☑️
     - createStore
     - createProduct
     - getAllStore

@@ -6,7 +6,6 @@ import { useState } from 'react'
 export const Login = () => {
     const { register, handleSubmit, reset } = useForm();
     const [data, setData] = useState('');
-    const [error, setError] = useState('');
 
     const onSubmit = async (data) => {
         try {
@@ -20,14 +19,14 @@ export const Login = () => {
             });
 
             if (response.status !== 200) {
-                setData('');
-                setError('Error en el login intenta nuevamente');
+                setData(response.message);
+                console.log(response)
                 reset();
             }
 
             const result = await response.json();
             setData(result.message);
-            setError('');
+            reset();
         } catch (error) {
             console.error('Error en el login:', error.message);
         }
@@ -53,7 +52,6 @@ export const Login = () => {
                 />
             </div>
 
-            {error && <p>{error}</p>}
             {data && <p>{data}</p>} 
             
             <button type="submit">Login</button>

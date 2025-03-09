@@ -18,7 +18,7 @@ export const login = async (req, res) => {
         );
         
         if (result.rows.length === 0) {
-            return res.status(401).json({ error: "Invalid username or password" });
+            return res.status(401).json({ message: "Invalid username or password" });
         }
 
         const store = await pool.query("SELECT * FROM store WHERE ownerId = $1", [result.rows[0].id]);
