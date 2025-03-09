@@ -14,9 +14,9 @@
 5. crea los controller para cada ruta:
      - login☑️
     - register☑️
-    - createStore
-    - createProduct
-    - getAllStore
+    - createStore☑️
+    - createProduct☑️
+    - getAllStore☑️
     - getProducStore
     - deleteProduct
     - editProduct
