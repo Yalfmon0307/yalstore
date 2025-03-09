@@ -58,9 +58,15 @@ export const register = async (req, res) => {
             [username, email, password]
         );
 
-        res.status(201).json(result.rows[0]);
+        if (result.rows.length === 0) {
+            return res.status(500).json({ message: "Error creating user" });
+        }
+
+        res.status(201).json({ message: "User created successfully" });
+
     } catch (error) {
-        console.log(error);
+        res.status(500).json({ message: "Error creating user" });
+
     }
 }
 
