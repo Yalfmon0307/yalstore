@@ -38,7 +38,7 @@ export const login = async (req, res) => {
             { expiresIn: "1h" }
         )
 
-        res.cookie("token", token, { httpOnly: true , secure: false, sameSite: "none" }).json({ message: "Login successful" });
+        res.cookie("token", token, { httpOnly: true , secure: true, sameSite: "none" }).json({ message: "Login successful" });
 
     } catch (error) {
         console.log(error);

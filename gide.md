@@ -21,9 +21,9 @@
     - deleteProduct
     - editProduct
 
-6. inicia el front con vite
+6. inicia el front con vite☑️
 7. crea los router de react con las rutas necesarias
-8. crea los componentes para cada ruta:
+y crea los componentes para cada ruta:
     - login
     - register
     - createStore
@@ -33,3 +33,21 @@
     - deleteProduct
     - editProduct      
 9. vincula los componentes entre si con LINK  
+
+
+
+frontend:
+
+1. iniciar el proyecto con react
+2. crea los routers de react
+3. crea los componentes necesarios para cade ruta:
+    - login
+    - register
+    - createStore
+    - createProduct
+    - getAllStore
+    - getProducStore
+    - deleteProduct
+    - editProduct   
+
+4. relaciona cada componente entre si con links

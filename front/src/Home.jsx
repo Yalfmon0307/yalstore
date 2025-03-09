@@ -1,4 +1,4 @@
-export async function Home() {
+export function Home() {
   return (
     <>
       <h1>Bienvenido a la tienda Yalstore</h1>
