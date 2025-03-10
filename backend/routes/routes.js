@@ -1,7 +1,9 @@
 import { Router } from "express";
 import { getAllStore, login, register, createStore, createProduct } from "../controllers/controller.js";
+import multer from "multer";
 
 const router = Router();
+const upload = multer();
 
 router.get("/", (req, res) => {
     res.send("Hello World!");
@@ -19,7 +21,7 @@ router.post("/createStore", createStore, (req, res) => {
     res.send("Create Store");
 });
 
-router.post("/createProduct", createProduct, (req, res) => {
+router.post("/createProduct", upload.single("file"), createProduct, (req, res) => {
     res.send("Create Product");
 });
 

@@ -91,10 +91,14 @@ export const createStore = async (req, res) => {
             [storeName, ownerId]
         );
 
-        res.status(201).json(result.rows[0]);
-        
+        if (result.rows.length === 0) {
+           return res.status(500).json({ message: "Error creating store" });
+        } 
+
+           return res.status(201).json({ message: "Store created successfully" });
+
 } catch (error) {
-    console.log(error);
+        res.status(500).json({ message: "Error creating store" });
 }
 
 }
@@ -131,7 +135,12 @@ export const createProduct = async (req, res) => {
             [productName, price, image, ownerId, storeId]
         );
 
-        res.status(201).json(result.rows[0]);
+        if (result.rows.length === 0) {
+            return res.status(500).json({ message: "Error creating product" });
+        }
+
+        res.status(201).json({ message: "Product created successfully" });
+        
     } catch (error) {
         console.log(error);
     }

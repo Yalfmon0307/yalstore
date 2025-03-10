@@ -5,6 +5,8 @@ import './index.css'
 import { Home } from './Home.jsx'
 import { Login } from './Login.jsx'
 import { Register } from './Register.jsx'
+import { CreateStore } from './CreateStore.jsx'
+import { CreateProduct } from './CreateProduct.jsx'
 
 const router = createBrowserRouter([
   {
@@ -18,6 +20,14 @@ const router = createBrowserRouter([
   {
     path: "/register",
     element: <Register />,
+  },
+  {
+    path: "/createStore",
+    element: <CreateStore />,
+  },
+  {
+    path: "/createProduct",
+    element: <CreateProduct />,
   }
 ]);
 
