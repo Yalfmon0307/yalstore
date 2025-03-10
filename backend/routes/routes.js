@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getAllStore, login, register, createStore, createProduct } from "../controllers/controller.js";
+import { getAllStore, login, register, createStore, createProduct, getProductStore } from "../controllers/controller.js";
 import multer from "multer";
 
 const router = Router();
@@ -29,8 +29,8 @@ router.get("/getAllStore", getAllStore, (req, res) => {
     res.send("Get All Store");
 });
 
-router.get("/getAllStoreProduct", (req, res) => {
-    res.send("Get All Store Product");
+router.get("/getProductStore", getProductStore, (req, res) => {
+    res.send("Get Products Store");
 });
 
 router.delete("/deleteProduct", (req, res) => {

@@ -8,6 +8,7 @@ import { Register } from './Register.jsx'
 import { CreateStore } from './CreateStore.jsx'
 import { CreateProduct } from './CreateProduct.jsx'
 import { GetAllStore } from './GetallStore.jsx'
+import { GetProductStore } from './GetProductStore.jsx'
 
 const router = createBrowserRouter([
   {
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
     path: "/getAllStore",
     element: <GetAllStore />,
   },
+  {
+    path: "/getProductStore",
+    element: <GetProductStore />,
+  }
 ]);
 
 createRoot(document.getElementById('root')).render(

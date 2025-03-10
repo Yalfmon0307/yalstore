@@ -162,3 +162,28 @@ export const createProduct = async (req, res) => {
     }
 };
 
+export const getProductStore = async (req, res) => {
+    try {
+        const token = req.cookies.token;
+        if (!token) {
+            return res.status(401).json({ message: "Unauthorized" });
+        }
+
+        const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+        const ownerId = decodedToken.payload.user.ownerId;
+        const storeId = decodedToken.payload.user.storeId;
+
+        const result = await pool.query(
+            "SELECT * FROM products WHERE ownerId = $1 AND storeId = $2",
+            [ownerId, storeId]
+        );
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({ message: "No products found" });
+        }
+
+        res.status(200).json(result.rows);
+    } catch (error) {
+        console.log(error);
+    }
+};

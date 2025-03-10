@@ -28,7 +28,7 @@ y crea los componentes para cada ruta:
     - register ☑️
     - createStore ☑️
     - createProduct☑️
-    - getAllStore
+    - getAllStore☑️
     - getProducStore
     - deleteProduct
     - editProduct      
