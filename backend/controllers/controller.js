@@ -134,8 +134,8 @@ export const createProduct = async (req, res) => {
         }
 
         const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
-        const ownerId = decodedToken.payload.user.id;
-        const storeId = decodedToken.payload.user.store;
+        const ownerId = decodedToken.payload.user.ownerId;
+        const storeId = decodedToken.payload.user.storeId;
 
         const { productName, price } = req.body;
 
@@ -155,6 +155,7 @@ export const createProduct = async (req, res) => {
         }
 
         res.status(201).json({ message: "Product created successfully" });
+        console.log(result)
 
     } catch (error) {
         console.log(error);
