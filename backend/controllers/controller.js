@@ -21,14 +21,11 @@ export const login = async (req, res) => {
             return res.status(401).json({ message: "Invalid username or password" });
         }
 
-        const store = await pool.query("SELECT * FROM store WHERE ownerId = $1", [result.rows[0].id]);
-
         const payload = {
             user: {
                 id: result.rows[0].id,
                 username: result.rows[0].username,
                 email: result.rows[0].email,
-                store: store.rows[0].id
             },
         };
 
@@ -94,10 +91,28 @@ export const createStore = async (req, res) => {
         if (result.rows.length === 0) {
            return res.status(500).json({ message: "Error creating store" });
         } 
+        console.log(result)
+
+        const payload = {
+            user: {
+                storeName: result.rows[0].storeName,
+                storeId: result.rows[0].id,
+                ownerId: ownerId,
+            },
+        };
+
+        const tokenStore = jwt.sign(
+            { payload},
+            process.env.JWT_SECRET,
+            { expiresIn: "1h" }
+        )
+
+        res.cookie("token", tokenStore, { httpOnly: true , secure: true, sameSite: "none" });
 
            return res.status(201).json({ message: "Store created successfully" });
 
 } catch (error) {
+    console.log(error);
         res.status(500).json({ message: "Error creating store" });
 }
 
@@ -140,7 +155,7 @@ export const createProduct = async (req, res) => {
         }
 
         res.status(201).json({ message: "Product created successfully" });
-        
+
     } catch (error) {
         console.log(error);
     }
